@@ -75,10 +75,10 @@ export default function Page() {
 
     if (categoryItem.slug) {
       const response = await updateCategory(newItem, categoryItem.slug);
-      response && revalidateRelatedCache({categories: true})
+      response && revalidateRelatedCache({categories: true, subcategories: true})
     } else {
       const response = await createCategory(newItem);
-      response && revalidateRelatedCache({categories: true})
+      response && revalidateRelatedCache({categories: true, subcategories: true})
     }
   }
 
@@ -89,11 +89,11 @@ export default function Page() {
 
     if (subItem.slug) {
       const response = await subUpdate(newItem, subItem.slug);
-      response && await fetch('/api/revalidate-subcategory', { method: 'POST' });
+      response && revalidateRelatedCache({categories: true, subcategories: true})
       categoryFetch();
     } else {
       const response = await subCreate(newItem);
-      response && await fetch('/api/revalidate-subcategory', { method: 'POST' });
+      response && revalidateRelatedCache({categories: true, subcategories: true})
       categoryFetch();
     }
   }

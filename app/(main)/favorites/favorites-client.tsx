@@ -13,7 +13,7 @@ interface Props {
   className?: string
 }
 
-const FavoritesClient: React.FC<Props> = ({ className }) => {
+export const FavoritesClient: React.FC<Props> = ({ className }) => {
   const { favorites, fetch } = useFavoriteStore();
   const [ loading, setLoading ] = React.useState(true);
 
@@ -43,7 +43,7 @@ const FavoritesClient: React.FC<Props> = ({ className }) => {
             </div>
             <span className="block text-[14px] mt-[35px] mb-[85px]">У закладках ще немає товарів</span>
             <Button asChild className="w-full py-4">
-              <Link href="/products">Продовжити покупки</Link>
+              <Link href="/">Продовжити покупки</Link>
             </Button>
           </div>
           }
@@ -52,5 +52,3 @@ const FavoritesClient: React.FC<Props> = ({ className }) => {
     </div>
   );
 };
-
-export default FavoritesClient;

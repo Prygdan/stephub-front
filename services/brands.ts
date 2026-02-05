@@ -30,6 +30,14 @@ export const get = async (): Promise<AxiosResponse<TBrand[]>> => {
   }
 };
 
+export const getSSR = unstable_cache(async (): Promise<TBrand[]> => {
+  try {
+    return (await api.get()).data;
+  } catch (error: unknown) {
+    throw error;
+  }
+}, ['brand-get'], { tags: ['brand-get']});
+
 export const show = unstable_cache(
   async ({ slug, page, searchParams }: GetProductsFiltersParams): Promise<TBrandWithProducts | null> => {
     const query = buildProductsQuery({ page, searchParams });

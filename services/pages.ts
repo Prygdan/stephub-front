@@ -2,6 +2,7 @@ import { TMetaTags } from "@/lib/types";
 import { apiHelper } from "./instance";
 import { AxiosResponse } from "axios";
 import { secureRequest } from "@/hooks/use-csrf-cookie";
+import { unstable_cache } from "next/cache";
 
 const api = apiHelper('pages');
 
@@ -20,13 +21,13 @@ export const get = async (): Promise<AxiosResponse<TPage[]>> => {
   }
 };
 
-export const show = async (slug: string): Promise<AxiosResponse<TPage>> => {
+export const show = unstable_cache(async (slug: string): Promise<TPage | null> => {
   try {
-    return await api.show(slug);
+    return (await api.show(slug)).data;
   } catch(error) {
-    throw error;
+    return null
   }
-}
+}, ['page'], { tags: ['page']})
 
 export const store = async (data: TPage): Promise<AxiosResponse<TPage>> => {
   try {

@@ -34,6 +34,16 @@ export const get = async (): Promise<AxiosResponse<TCategory[]>> => {
   }
 };
 
+export const getSSR = unstable_cache(
+  async (): Promise<TCategory[]> => {
+    try {
+      return (await api.get()).data;
+    } catch (error: unknown) {
+      throw error;
+    }
+  }, ['category-get'], { tags: ['category-get']}
+);
+
 export const show = unstable_cache(
   async ({ slug, page, searchParams }: GetProductsFiltersParams): Promise<TCategoryWithProducts | null> => {
     const query = buildProductsQuery({ page, searchParams });

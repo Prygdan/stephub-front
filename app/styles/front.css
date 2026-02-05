@@ -146,11 +146,11 @@
 }
 
 .content-html h1 {
-  @apply text-3xl font-bold mt-6 mb-4;
+  @apply text-2xl font-bold mt-6 mb-4;
 }
 
 .content-html h2 {
-  @apply text-2xl font-semibold mt-5 mb-3;
+  @apply text-xl font-semibold mt-5 mb-3;
 }
 
 .content-html h3 {

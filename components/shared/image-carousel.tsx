@@ -68,12 +68,14 @@ export const ImageCarousel: React.FC<Props> = ({ images, discont, className }) =
             cursor: isZoomed ? 'zoom-out' : 'zoom-in'
           }}
         >
-          <Image 
-            src={`${process.env.NEXT_PUBLIC_STORAGE_APP_URL}/${images[currentIndex]}`} 
-            alt="Product image" 
-            layout="fill" 
-            objectFit="cover" 
-            className='shadow-lg shadow-black'
+          <Image
+            src={`${process.env.NEXT_PUBLIC_STORAGE_APP_URL}/${images[currentIndex]}`}
+            alt="Product image"
+            fill
+            sizes="(max-width: 1024px) 390px, 490px"
+            quality={90}
+            style={{ objectFit: 'cover' }}
+            priority
           />
         </div>
 

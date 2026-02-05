@@ -24,7 +24,7 @@ export const Filters: React.FC<Props> = ({ type, className }) => {
         />
         : <ProductsFilter
           type={type} 
-          className='min-w-70' 
+          className='w-50 md:w-65' 
         />
       }
     </div>

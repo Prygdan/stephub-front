@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '@/components/shared/container';
-import FavoritesClient from './favorites-client';
+import { FavoritesClient } from './favorites-client';
 
 export default function Page() {
   return (

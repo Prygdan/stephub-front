@@ -70,7 +70,7 @@ export const CropImage: React.FC<CropImageProps> = ({ setImg, aspect = 1/1, clea
         crop.height * scaleY
       );
   
-      const url = canvas.toDataURL('image/jpeg', 0.6); // 1.0 — максимальна якість JPEG
+      const url = canvas.toDataURL('image/jpeg', 0.9); 
       setCompletedImageUrl(url);
     }
   };

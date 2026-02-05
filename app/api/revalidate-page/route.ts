@@ -1,7 +1,6 @@
 import { revalidateTag } from 'next/cache';
 
 export async function POST() {
-  revalidateTag('category');
-  revalidateTag('category-get');
+  revalidateTag('page');
   return new Response(JSON.stringify({ ok: true }));
 }

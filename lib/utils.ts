@@ -96,32 +96,36 @@ export const OrderStatusArray = Object.entries(OrderStatusLabel).map(([key, valu
   name: value
 }));
 
-type TRelativeDBCache = {
-  categories?: boolean;
-  subcategories?: boolean;
-  products?: boolean;
-};
-
 /**
  * Triggers revalidation for related cached resources.
  * Intended to be called after successful create/update/delete operations.
  */
-export const revalidateRelatedCache = async ({
-  categories,
-  subcategories,
-  products
-}: TRelativeDBCache) => {
-  const requests: Promise<Response>[] = [];
+type TRelativeDBCache = {
+  categories?: boolean;
+  subcategories?: boolean;
+  products?: boolean;
+  brands?: boolean;
+  pages?: boolean
+};
 
-  if (categories) {
-    requests.push(fetch('/api/revalidate-category', { method: 'POST' }));
-  }
-  if (subcategories) {
-    requests.push(fetch('/api/revalidate-subcategory', { method: 'POST' }));
-  }
-  if (products) {
-    requests.push(fetch('/api/revalidate-products', { method: 'POST' }));
-  }
+const REVALIDATE_ENDPOINTS: Record<keyof TRelativeDBCache, string> = {
+  categories: '/api/revalidate-category',
+  subcategories: '/api/revalidate-subcategory',
+  products: '/api/revalidate-products',
+  brands: '/api/revalidate-brand',
+  pages: '/api/revalidate-page',
+};
+
+export const revalidateRelatedCache = async (
+  flags: TRelativeDBCache
+) => {
+  const requests = Object.entries(flags)
+    .filter(([, enabled]) => enabled)
+    .map(([key]) =>
+      fetch(REVALIDATE_ENDPOINTS[key as keyof TRelativeDBCache], {
+        method: 'POST',
+      })
+    );
 
   try {
     await Promise.all(requests);
@@ -129,3 +133,4 @@ export const revalidateRelatedCache = async ({
     console.error('Cache revalidation failed:', error);
   }
 };
+

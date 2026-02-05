@@ -61,7 +61,7 @@ export default async function Page({ params, searchParams }: any) {
           ]}
           className='flex justify-start pb-5'
           />
-        <div className="md:flex md:gap-2"> 
+        <div className="md:flex md:gap-5"> 
           <Filters type={category.category} />
           <div>
             {category.category.carousel && 
@@ -72,10 +72,8 @@ export default async function Page({ params, searchParams }: any) {
                 {product && <ProductListCard product={product} />}
               </div>))}
             </ListTemplate>}
-            
           </div>
         </div>
-
         {category.products.last_page >= Number(process.env.NEXT_PUBLIC_PAGINATION_COUNT) &&
           <ProductsPagination
             refetchProducts={refetchCategoryProducts} 
@@ -83,14 +81,15 @@ export default async function Page({ params, searchParams }: any) {
             className='my-8' 
           />
         }
-
         {category.category.description && 
           <Description 
             description={category.category.description} 
-            className='text-neutral-500 py-2' 
+            className='text-neutral-500 pt-10 pb-5'
+            size="13" 
           />
         }
       </Container>
+      
         /* Render Subcategory Page */
       : subcategory?.subcategory ? 
       <Container>
@@ -104,7 +103,7 @@ export default async function Page({ params, searchParams }: any) {
           ]}
           className='flex justify-start pb-5'
           />
-        <div className="flex md:gap-2">
+        <div className="flex md:gap-5">
           <Filters type={subcategory.subcategory} />
           <div>
             {subcategory.products && <ListTemplate>
@@ -118,7 +117,8 @@ export default async function Page({ params, searchParams }: any) {
         {subcategory.subcategory.description && 
           <Description 
             description={subcategory.subcategory.description} 
-            className='text-neutral-500 py-2' 
+            className='text-neutral-500 pt-10 pb-5'
+            size="13" 
           />
         }
 

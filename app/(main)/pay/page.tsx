@@ -9,8 +9,8 @@ export default async function Page() {
     const data = await show('pay');
 
     return <Container>
-        <h1>{data.data.title}</h1>
-        <Description description={data.data.content} />
+        <h1>{data && data.title}</h1>
+        {data && <Description description={data.content} />}
       </Container>
   } catch (error) {
     return notFound();

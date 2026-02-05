@@ -95,6 +95,20 @@ export const ProductsFilterMobile: React.FC<Props> = ({ type, className }) => {
   return (
     <div className={className}>
       <div className='flex gap-2 overflow-x-auto pb-2 scrollbar-hide'>
+        {/* Filter Price */}
+        <FiltersItemDrawer 
+          title='Ціна'
+          triger='Ціна' 
+          setFilters={filters.prices.priceFrom !== undefined || filters.prices.priceTo !== undefined} 
+          clear={clearPrice}
+        >
+          <Price 
+            filters={filters}
+            availableMinPrice={availableFilters.availableMinPrice}
+            availableMaxPrice={availableFilters.availableMaxPrice}
+            loading={availableFilters.loading}
+            />
+        </FiltersItemDrawer>
 
         {/* Filter Categories */}
         {isAllowed({filter: 'categories', subcategory: type}) && <FiltersItemDrawer 

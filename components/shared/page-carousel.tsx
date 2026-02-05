@@ -24,7 +24,7 @@ export const PageCarousel: React.FC<Props> = ({ carousel, className }) => {
         className='overflow-hidden'>
         <CarouselContent>
           {carousel.map((item) => (<CarouselItem key={item.id}>
-            <Img src={item.image} alt={item.image} height={200} />
+            <Img src={item.image} alt={item.image} height={200} className='min-h-[200px] object-cover' />
           </CarouselItem>))}
         </CarouselContent>
         <CarouselPrevious className='absolute left-1 top-1/2' />

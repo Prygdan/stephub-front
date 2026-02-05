@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from '@/components/ui/button';
 import { PenLine, Trash2 } from 'lucide-react';
 import { Img } from '@/components/shared/img';
-import { ALL_FILTERS } from '@/lib/utils';
+import { ALL_FILTERS, revalidateRelatedCache } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 
 export default function Page() {
@@ -41,11 +41,13 @@ export default function Page() {
     const newItem = { ...item, image: image };
 
     if (item.id) {
-      await update(newItem, item.slug);
+      const response = await update(newItem, item.slug);
       setImage(null);
+      response && revalidateRelatedCache({brands: true})
     } else {
-      await create(newItem);
+      const response = await create(newItem);
       setImage(null);
+      response && revalidateRelatedCache({brands: true})
     }
   }
 

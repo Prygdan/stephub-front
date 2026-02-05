@@ -17,6 +17,7 @@ import { Alert } from '../alert-dialog';
 import { ArrowLeft, ShoppingCart } from 'lucide-react';
 import { FastOrder } from './fast-order';
 import { Favorites } from './favorites';
+import { cn } from '@/lib/utils';
 
 interface Props {
   product:    TProduct
@@ -65,7 +66,7 @@ export const ProductDetails: React.FC<Props> = ({ product, admin=false, classNam
   }
 
   return (
-    <div className={className}>
+    <div className={cn('relative', className)}>
       <Alert
         open={open}
         setOpen={() => {setOpen(false)}}
@@ -81,14 +82,18 @@ export const ProductDetails: React.FC<Props> = ({ product, admin=false, classNam
         fastOrderOpen={fastOpen}
         setFastOrderOpen={() => setFastOpen(false)}
       />
+
+      {product.id &&
+        <Favorites 
+          size={18} 
+          productId={product.id} 
+          className='md:hidden absolute right-3 top-3 z-20 bg-white rounded-full p-1' 
+        />
+      }
+
       {product.images && product.images.length > 0 && (<>
           {/* For mobile */}
         {!admin && <div className="relative md:hidden overflow-x-auto scrollbar-hide">
-          {product.id && 
-            <Favorites 
-              size={18} 
-              productId={product.id} 
-              className='absolute right-3 top-3 z-0 md:hidden bg-white rounded-full p-1' />}
           <div className="flex">
             {product.images.map((i) =>
               <Img
@@ -184,6 +189,11 @@ export const ProductDetails: React.FC<Props> = ({ product, admin=false, classNam
                   <span className="text-[#777777]">Бренд</span>
                   <span className="block mb-1.25 flex-1 border-b border-dotted border-gray-400"></span>
                   <span className="text-balack font-medium">{product.brand.name}</span>
+                </li>}
+                {product.article && <li className="flex gap-1 justify-between">
+                  <span className="text-[#777777]">Артикул</span>
+                  <span className="block mb-1.25 flex-1 border-b border-dotted border-gray-400"></span>
+                  <span className="text-balack font-medium">{product.article}</span>
                 </li>}
                 {product.season && <li className="flex gap-1 justify-between">
                   <span className="text-[#777777]">Сезон</span>

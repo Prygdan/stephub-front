@@ -14,6 +14,7 @@ import { Trash2 } from 'lucide-react';
 import { Img } from '@/components/shared/img';
 import { Label } from '@/components/ui/label';
 import { useCategories } from '@/hooks/filters/use-categories';
+import { revalidateRelatedCache } from '@/lib/utils';
 
 export default function Page() {
   const defaultItem: CarouselsAPI.TCarouselCreate = {
@@ -52,7 +53,13 @@ export default function Page() {
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
     await create(item);
+    revalidateRelatedCache({categories: true})
   };
+
+  const handleDeleteCarousel = async (id: string) => { 
+    await destroy(id);
+    revalidateRelatedCache({categories: true});
+  }
 
   const handleCloseModal = () => {
     closeModal();
@@ -106,7 +113,13 @@ export default function Page() {
           {item.items && item.items.length > 0 && item.items.map((img, index) => (
             <div key={index} className="flex items-center mt-2">
               <img src={img.image} alt={`Slide ${index}`} width={100} height={50} />
-              <Button type="button" className="ml-4" variant="destructive" onClick={() => handleRemoveImage(index)}>Видалити</Button>
+              <Button 
+                type="button" 
+                className="ml-4" 
+                variant="destructive" 
+                onClick={() => handleRemoveImage(index)}>
+                  Видалити
+                  </Button>
             </div>
           ))}
         </div>
@@ -137,7 +150,12 @@ export default function Page() {
                     </div>))}
                   </TableCell>
                   <TableCell className='flex justify-end'>
-                    <Button size={'sm'} title='Видалити' onClick={() => destroy(carousel.id)}><Trash2 /></Button>
+                    <Button 
+                      size={'sm'} 
+                      title='Видалити'
+                      onClick={() => handleDeleteCarousel(carousel.id)}>
+                        <Trash2 />
+                      </Button>
                   </TableCell>
                 </TableRow>
               ))}

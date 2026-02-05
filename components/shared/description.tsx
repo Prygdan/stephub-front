@@ -4,11 +4,12 @@ import React from 'react'
 import sanitizeHtml from 'sanitize-html'
 
 interface Props {
-  description: string
-  className?: string
+  description:  string
+  size?:        string
+  className?:   string
 }
 
-export const Description = ({ description, className = '' }: Props) => {
+export const Description = ({ description, size='14', className = '' }: Props) => {
   const sanitizedHTML = sanitizeHtml(description, {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat([
       'img',
@@ -24,7 +25,8 @@ export const Description = ({ description, className = '' }: Props) => {
 
   return (
     <div
-      className={`content-html prose prose-description max-w-none font-merriweather! text-[13px]! ${className}`}
+      className={`content-html prose prose-description max-w-none font-merriweather! ${className}`}
+      style={size ? { fontSize: `${size}px` } : undefined}
       dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
     />
   )

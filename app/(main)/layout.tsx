@@ -2,7 +2,7 @@ import React from 'react';
 import Loading from './loading';
 import '../styles/front.css';
 import { Header } from '@/components/shared/header/header';
-import { get as getCategories } from '@/services/categories';
+import { getSSR as getCategories } from '@/services/categories';
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Footer } from '@/components/shared/footer';
 
@@ -15,7 +15,7 @@ const RootLayout: React.FC<Props> = async ({ children }) => {
 
   return (
     <main className="relative">
-      <Header categories={categories.data} />
+      <Header categories={categories} />
       <div className='mt-[64px] md:mt-[96px]'>
         <NuqsAdapter>
           <React.Suspense fallback={<Loading />}>
@@ -23,7 +23,7 @@ const RootLayout: React.FC<Props> = async ({ children }) => {
           </React.Suspense>
         </NuqsAdapter>
       </div>
-      <Footer categories={categories.data} />
+      <Footer categories={categories} className='mt-12' />
     </main>
   )
 }

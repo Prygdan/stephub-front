@@ -83,12 +83,16 @@ export default function Page() {
     if (item.slug) {
       const response = await update(updatedItem, item.slug);
       cleanSelected();
-      response && revalidateRelatedCache({categories: true, subcategories: true, products: true})
+      response && revalidateRelatedCache({
+        categories: true, subcategories: true, products: true, brands: true 
+      })
     } else {
       const response: API.TProduct | undefined = await create(updatedItem);
       cleanSelected();
       response && router.push(`/admin/products/${response.slug}`);
-      response && revalidateRelatedCache({categories: true, subcategories: true, products: true})
+      response && revalidateRelatedCache({
+        categories: true, subcategories: true, products: true, brands: true
+      })
     }
   };
 
@@ -381,12 +385,11 @@ export default function Page() {
               />
             </TableCell>
             <TableCell>
-              <ProductPrice product={item} />
               {item.images && item.images?.length > 0 &&                   
               <Carousel className='relative'>
                 <Link href={`/admin/products/${item.slug}`}>
                   <CarouselContent className='w-37.5'>
-                    {item.images?.map((i) => (<CarouselItem key={i.id}>
+                    {item.images?.slice(0,3).map((i) => (<CarouselItem key={i.id}>
                       <Img src={i.image} alt={item.name} width={100}/>
                     </CarouselItem>))}
                   </CarouselContent>
@@ -395,7 +398,14 @@ export default function Page() {
                 <CarouselNext className='absolute right-0' />
               </Carousel>}
             </TableCell>
-            <TableCell className='whitespace-normal wrap-break-word max-w-65'>{item.name}</TableCell>
+            <TableCell>
+              <Link href={`/admin/products/${item.slug}`}>
+                <div className='whitespace-normal wrap-break-word max-w-65'>
+                  {item.name}
+                </div>
+                <ProductPrice product={item} className='mt-3' />
+              </Link>
+            </TableCell>
             <TableCell>
               <span>{item.category?.name}</span>
               {item.subcategory && <>
@@ -419,7 +429,10 @@ export default function Page() {
               <Button size='sm' title='Редагувати' className='mr-1' onClick={() => openModal(item)}>
                 <PenLine />
               </Button>
-              <Button size='sm' title='Видалити' onClick={() => destroy(item.slug ?? '')}>
+              <Button size='sm' title='Видалити' onClick={() => {
+                  destroy(item.slug ?? '');
+                  revalidateRelatedCache({categories: true, subcategories: true, products: true})
+                  }}>
                 <Trash2 />
               </Button>
             </TableCell>

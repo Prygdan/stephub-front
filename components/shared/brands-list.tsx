@@ -25,9 +25,12 @@ export const BrandsList: React.FC<Props> = ({ brands, className }) => {
         >
         <CarouselContent className="ml-1 mr-1">
           {brands.filter((b) => b.image != null && b.in_popular).map((item, index) => (
-            <CarouselItem key={index} className="px-8 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/7">
+            <CarouselItem 
+              key={index} 
+              className="px-2 md:px-8 basis-1/3 sm:basis-1/4 md:basis-1/4 lg:basis-1/7">
               <Link href={`/brand/${item.slug}`}>
-                {item.image ? <Img src={item.image} alt={item.name} className='rounded-lg max-w-[70px]'/> : ''}
+                {item.image 
+                  ? <Img src={item.image} alt={item.name} className='rounded-lg max-w-[60px] md:max-w-[70px]'/> : ''}
               </Link>
             </CarouselItem>
           ))}

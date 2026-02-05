@@ -12,6 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { PenLine, Trash2 } from 'lucide-react';
 import { Description } from '@/components/shared/description';
+import { revalidateRelatedCache } from '@/lib/utils';
 
 export default function Page() {
   const defaultPage: API.TPage = {
@@ -34,8 +35,10 @@ export default function Page() {
     const newItem = { ...item };
     if (item.id) {
       await update(newItem, item.slug);
+      revalidateRelatedCache({pages: true})
     } else {
-      await create(newItem);
+      create(newItem);
+      revalidateRelatedCache({pages: true})
     }
   }
 
@@ -102,13 +105,17 @@ export default function Page() {
                   <span className='block'>{item.slug}</span>
                   <span className='block'>{item.title}</span>
                 </TableCell>
-                <TableCell>
+                <TableCell className='whitespace-normal min-w-100'>
                   <Description description={item.content} />
                 </TableCell>
                 <TableCell className='flex'>
                   {item && <>
-                    <Button size={'sm'} title='Редагувати' className='mr-1' onClick={() => openModal(item)}><PenLine /></Button>
-                    <Button size={'sm'} title='Видалити' onClick={() => destroy(item.slug)}><Trash2 /></Button>
+                    <Button size={'sm'} title='Редагувати' className='mr-1' onClick={() => openModal(item)}>
+                      <PenLine />
+                    </Button>
+                    <Button size={'sm'} title='Видалити' onClick={() => destroy(item.slug)}>
+                      <Trash2 />
+                    </Button>
                   </>}
                 </TableCell>
               </TableRow>

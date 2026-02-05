@@ -90,7 +90,7 @@ export const Footer: React.FC<Props> = ({ categories, className }) => {
 
       <Container className="flex justify-center items-center text-neutral-600 gap-1 border-t border-t-neutral-100 py-5">
         <Copyright size={12} />
-        <span className="text-[14px]">2025 ZMY.UA v.1.0</span>
+        <span className="text-[14px]">2026 STEPHUB v.1.0</span>
       </Container>
     </div>
   );
