@@ -14,6 +14,10 @@ import { PenLine, Trash2 } from 'lucide-react';
 import { Img } from '@/components/shared/img';
 import { ALL_FILTERS, revalidateRelatedCache } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
+import { MetaTagsForm } from '@/components/shared/meta-tags/meta-tags-form';
+import { MetaTagsShow } from '@/components/shared/meta-tags/meta-tags-show';
+import { Tiptap } from '@/components/ui/tiptap/tiptap';
+import { InputError } from '@/components/shared/input-error';
 
 export default function Page() {
   const defaultBrand: brandsAPI.TBrand = {
@@ -21,6 +25,7 @@ export default function Page() {
     name: '',
     slug: '',
     image: '',
+    description: '',
     in_popular: false,
     allowed_filters: [],
   };
@@ -56,7 +61,13 @@ export default function Page() {
   return <div>
     <Title text='Список брендів' size='xl' className='uppercase' />
 
-    <DialogForm open={open} openModal={openModal} closeModal={handleCloseModal} item={item} sendForm={sendForm}>
+    <DialogForm 
+      open={open} 
+      openModal={openModal} 
+      closeModal={handleCloseModal} 
+      item={item} 
+      sendForm={sendForm}
+      formClassName='min-w-[90%]'>
       <InputText
         label='Назва бренду'
         name='name'
@@ -102,6 +113,19 @@ export default function Page() {
           </div>))}
         </div>
       </div>
+      
+      <Label>Текст для сторінки</Label>
+      <Tiptap
+        value={item.description ?? ''}
+        onChange={(val) => setItem({ ...item, description: val })}
+      />
+      <InputError messages={errors.description}/>
+
+      <MetaTagsForm
+        item={item}
+        setItem={(value) => setItem({ ...item, ...value })}
+        errors={errors}
+      />
     </DialogForm>
   
     <div className='mt-3'> 
@@ -120,7 +144,15 @@ export default function Page() {
         <TableBody>
           {items.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>{item.id}</TableCell>
+              <TableCell>
+                <span>{item.id}</span>
+                <MetaTagsShow
+                  title={item.meta_title ?? ''}
+                  description={item.meta_description ?? ''}
+                  keywords={item.meta_keywords ?? ''}
+                  className='mt-1.5'
+                />
+              </TableCell>
               <TableCell>{item.name}</TableCell>
               <TableCell className='max-w-[100px]'>
                 {item.image 

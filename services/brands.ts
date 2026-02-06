@@ -1,4 +1,4 @@
-import { GetProductsFiltersParams, PaginatedResponse, TTimestamps } from "@/lib/types";
+import { GetProductsFiltersParams, PaginatedResponse, TMetaTags, TTimestamps } from "@/lib/types";
 import { apiHelper, http } from "./instance";
 import { secureRequest } from "@/hooks/use-csrf-cookie";
 import { AxiosResponse } from "axios";
@@ -6,10 +6,11 @@ import { unstable_cache } from "next/cache";
 import { buildProductsQuery } from "@/lib/filters-products-query";
 import { TProduct } from "./products";
 
-export type TBrand = TTimestamps & {
+export type TBrand = TTimestamps & TMetaTags & {
   id: string
   name: string,
   slug: string,
+  description?: string
   image: string | null
   in_popular: boolean
   allowed_filters: string[] | null

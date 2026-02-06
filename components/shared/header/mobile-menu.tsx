@@ -75,9 +75,9 @@ export const MobileMenu: React.FC<Props> = ({ categories, className }) => {
           {showPhone && 
           <div ref={phoneRef} className='absolute z-50 right-0 top-13 py-3 bg-black shadow-md'>
             <Container className='text-md text-center border-b border-neutral-500 pb-3'>
-              <PhoneLink phone="380964657346" className="block mb-2" />
-              <PhoneLink phone="380964657346" className="block mb-2" />
-              <EmailLink email='mega@gmail.com' className='normal-case mt-2' />
+              <PhoneLink phone="38099999999" className="block mb-2" />
+              <PhoneLink phone="38099999999" className="block mb-2" />
+              <EmailLink email='stephub@gmail.com' className='normal-case mt-2' />
             </Container>
             <HoursWork className='text-center uppercase pt-3' />
           </div>}

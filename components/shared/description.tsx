@@ -25,7 +25,7 @@ export const Description = ({ description, size='14', className = '' }: Props) =
 
   return (
     <div
-      className={`content-html prose prose-description max-w-none font-merriweather! ${className}`}
+      className={`content-html prose prose-description leading-[1.2]! max-w-none font-merriweather! ${className}`}
       style={size ? { fontSize: `${size}px` } : undefined}
       dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
     />

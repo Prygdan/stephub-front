@@ -44,7 +44,7 @@ export function ProductsPagination({
                 className="rounded-none cursor-pointer"
                 onClick={() => handleOffsetChange(page - 1)}
               >
-                <ChevronLeft className="size-4" /> Previous
+                <ChevronLeft className="size-4" />
               </Button>
             </PaginationItem>
             <PaginationItem>
@@ -84,7 +84,7 @@ export function ProductsPagination({
               onClick={() => handleOffsetChange(page + 1)}
               className="rounded-none cursor-pointer"
             >
-              <ChevronRight className="size-4" /> Next
+              <ChevronRight className="size-4" />
             </Button>
           </PaginationItem>
         )}

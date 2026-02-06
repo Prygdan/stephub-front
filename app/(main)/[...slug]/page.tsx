@@ -11,6 +11,111 @@ import { ProductListCard } from "@/components/shared/product/product-list-card";
 import { Carousel } from "@/components/shared/carousel";
 import { ProductsPagination } from "@/components/shared/products-pagination";
 import { Filters } from "@/components/shared/filters/filters";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string[] }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  if (!Array.isArray(slug) || slug.length > 2 || slug.length === 0) {
+    return notFound();
+  }
+
+  const filters = await loadSearchParams(searchParams);
+  const page = filters.page || 1;
+  const hasActiveFilters = page > 1 || [
+    filters.priceFrom, filters.priceTo,
+    filters.sizes, filters.brands, filters.seasons,
+    filters.materials, filters.categories, filters.subcategories,
+  ].some(val => val && val !== "" && val !== "default");
+  const baseUrl = process.env.APP_URL || '';
+  let canonical = `${baseUrl}/${slug.join("/")}`;
+  if (page > 1) {
+    canonical += `?page=${page}`;
+  }
+
+  let title = "";
+  let description = "";
+  let keywords = "";
+  let categoryName = "";
+  let subcategoryName = "";
+
+  try {
+    if (slug.length === 1) {
+      // Категорія
+      const categoryData = await getCategory({
+        slug: slug[0],
+        page: 1, // для мета беремо першу сторінку або без пагінації
+        searchParams: {}, // без фільтрів для мета
+      });
+      if (!categoryData?.category) return notFound();
+
+      categoryName = categoryData.category.name;
+      title = categoryData.category.meta_title ?? `${categoryName} – купити в інтернет-магазині`;
+      description = categoryData.category.meta_description ?? `Широкий вибір товарів у категорії ${categoryName.toLowerCase()}. Доступні ціни, швидка доставка по Україні.`;
+      keywords = categoryData.category.meta_keywords ?? `${categoryName}, купити, кросівки, вигідно, доставка`
+    } else {
+      // Підкатегорія
+      const subcategoryData = await getSubcategory({
+        slug: slug[1],
+        page: 1,
+        searchParams: {},
+      });
+      if (!subcategoryData?.subcategory) return notFound();
+
+      const catData = await getCategory({ slug: slug[0], page: 1, searchParams: {} });
+
+      subcategoryName = subcategoryData.subcategory.name;
+      categoryName = catData?.category?.name || "";
+
+      title =  subcategoryData.subcategory.meta_title ?? `${subcategoryName} – купити в ${categoryName.toLowerCase()}`;
+      description =  subcategoryData.subcategory.meta_description ?? `Великий асортимент у підкатегорії ${subcategoryName}. Якісні товари за вигідними цінами в магазині.`;
+      keywords = subcategoryData.subcategory.meta_keywords  ?? `${subcategoryName}, купити, кросівки, вигідно, доставка`
+    }
+  } catch (err) {
+    return notFound()
+  }
+  return {
+    title,
+    description,
+    keywords,
+    metadataBase: new URL(baseUrl),
+    alternates: {
+      canonical,
+      languages: {
+        "uk-UA": canonical,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: "StepHub",
+      locale: "uk_UA",
+      type: "website",
+      // images: [{ url: "/og-category.jpg", width: 1200, height: 630 }], // додай реальний og-image
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    robots: hasActiveFilters
+      ? {
+          index: false,
+          follow: true,
+          googleBot: { index: false, follow: true },
+        }
+      : {
+          index: true,
+          follow: true,
+        },
+  };
+}
 
 export default async function Page({ params, searchParams }: any) {
   try {
@@ -67,11 +172,14 @@ export default async function Page({ params, searchParams }: any) {
             {category.category.carousel && 
               <Carousel carousel={category.category.carousel} className="mb-4" />}
               
-            {category.products && <ListTemplate>
+            {category.products && category.products.data.length > 0 
+            ? <ListTemplate>
               {category.products.data.map((product) => (<div key={product.id}>
                 {product && <ProductListCard product={product} />}
               </div>))}
-            </ListTemplate>}
+            </ListTemplate>
+            : <span>В даному розділі товарів ще немає!</span>
+            }
           </div>
         </div>
         {category.products.last_page >= Number(process.env.NEXT_PUBLIC_PAGINATION_COUNT) &&
@@ -106,11 +214,14 @@ export default async function Page({ params, searchParams }: any) {
         <div className="flex md:gap-5">
           <Filters type={subcategory.subcategory} />
           <div>
-            {subcategory.products && <ListTemplate>
+            {subcategory.products && subcategory.products.data.length > 0 
+            ? <ListTemplate>
               {subcategory.products.data.map((product) => (<div key={product.id}>
                 {product && <ProductListCard product={product} />}
               </div>))}
-            </ListTemplate>}
+            </ListTemplate>
+            : <span>В даному розділі товарів ще немає!</span>
+          }
           </div>
         </div>
 

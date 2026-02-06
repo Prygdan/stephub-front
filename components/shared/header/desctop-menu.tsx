@@ -44,8 +44,8 @@ export const DesctopMenu: React.FC<Props> = ({ categories, className }) => {
           <div className='flex items-center text-[13px] text-black font-normal'>
             <div className="relative flex items-center group">
               <PhoneCall size={14} />
-              <PhoneLink phone="380964657346" className="ml-2 phone" />
-              <PhoneLink phone="380964657346" className="ml-2 phone" />
+              <PhoneLink phone="380999999999" className="ml-2 phone" />
+              <PhoneLink phone="380999999999" className="ml-2 phone" />
 
               <HoursWork className='z-20 absolute bottom-[-120px] left-0 p-3 bg-white hidden group-hover:block shadow-md' />
             </div>

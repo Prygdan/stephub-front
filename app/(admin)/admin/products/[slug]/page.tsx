@@ -93,7 +93,7 @@ export default function Page() {
   }, [product, setProduct, page]);
 
   return (
-    <div className='max-w-[900px]'>
+    <div className='max-w-225'>
       {errors && (
         <AlertMessage
           type="error"

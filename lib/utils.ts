@@ -134,3 +134,19 @@ export const revalidateRelatedCache = async (
   }
 };
 
+export function hasActiveFilters(filters: TSearchParams, page: number = 1): boolean {
+  // page > 1 завжди вважаємо "активним" (пагінація впливає на вміст)
+  if (page > 1) return true;
+
+  // Перевіряємо всі поля, які можуть бути заповнені користувачем
+  return Boolean(
+    filters.priceFrom ||
+    filters.priceTo ||
+    filters.sizes ||
+    filters.brands ||
+    filters.seasons ||
+    filters.materials ||
+    filters.categories ||
+    filters.subcategories
+  );
+}
