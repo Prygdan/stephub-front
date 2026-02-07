@@ -211,9 +211,9 @@ export default async function Page({ params, searchParams }: any) {
           ]}
           className='flex justify-start pb-5'
           />
-        <div className="flex md:gap-5">
+        <div className="md:flex md:gap-5"> 
           <Filters type={subcategory.subcategory} />
-          <div>
+          <div>              
             {subcategory.products && subcategory.products.data.length > 0 
             ? <ListTemplate>
               {subcategory.products.data.map((product) => (<div key={product.id}>
@@ -221,7 +221,7 @@ export default async function Page({ params, searchParams }: any) {
               </div>))}
             </ListTemplate>
             : <span>В даному розділі товарів ще немає!</span>
-          }
+            }
           </div>
         </div>
 
