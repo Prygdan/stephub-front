@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const Brands: React.FC<Props> = ({ filters, brands, availableBrands, loading, className }) => {
-  const brandsItems = brands.map((item) => ({ value: String(item.id), text: item.name }));
+  const items = brands.map((item) => ({ value: String(item.id), text: item.name }));
   const availableItems = availableBrands && availableBrands.map((item) => ({ value: String(item.id), text: item.name }));
 
   return (
@@ -23,8 +23,8 @@ export const Brands: React.FC<Props> = ({ filters, brands, availableBrands, load
         name="brands"
         className="mt-5"
         limit={6}
-        defaultItems={brandsItems.slice(0, 6)}
-        items={availableItems ?? []}
+        defaultItems={items.slice(0, 6)}
+        items={items ?? []}
         loading={loading}
         onClickCheckbox={(value) => {
           filters.setBrands(value);

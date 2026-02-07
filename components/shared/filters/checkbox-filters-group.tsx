@@ -55,8 +55,25 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   }
 
   const list = showAll
-    ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLocaleLowerCase()))
-    : (defaultItems || items).slice(0, limit);
+  ? items
+      .filter((item) =>
+        item.text.toLowerCase().includes(searchValue.toLocaleLowerCase())
+      )
+      .sort((a, b) => {
+        const aAvailable = available?.some((av) => av.value === a.value) ?? false;
+        const bAvailable = available?.some((av) => av.value === b.value) ?? false;
+        // якщо aAvailable і bAvailable, порядок не змінюємо
+        if (aAvailable === bAvailable) return 0;
+        return aAvailable ? -1 : 1; // доступні вверх
+      })
+  : (defaultItems || items)
+      .slice(0, limit)
+      .sort((a, b) => {
+        const aAvailable = available?.some((av) => av.value === a.value) ?? false;
+        const bAvailable = available?.some((av) => av.value === b.value) ?? false;
+        if (aAvailable === bAvailable) return 0;
+        return aAvailable ? -1 : 1;
+      });
 
   return (
     <div className={className}>
@@ -92,16 +109,22 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
 
       {items.length > limit && (
         <div className=''>
-          <button onClick={() => setShowAll(!showAll)} className="text-primary mt-3">
+          <button onClick={() => setShowAll(!showAll)} className="text-primary w-full mt-3 flex justify-end cursor-pointer">
             {showAll 
-            ? <div className='flex items-center cursor-pointer underline decoration-dashed text-blue-500'>
-              <ChevronsUp size={17} />
-              <span>Закрити</span>
-            </div> 
-            : <div className='flex items-center cursor-pointer underline decoration-dashed text-blue-500'>
-              <ArrowDown size={17} />
-              <span>Показати всі</span>
-            </div> }
+            ? <div className='flex w-full items-center gap-2 text-[#95C0A4]'>
+                <span className='block text-[10px]'>Менше</span>
+                <div className='border-b border-[#95C0A4] border-dashed w-full'></div>
+                <div className='flex-none'>
+                  <ChevronsUp size={24} />
+                </div>
+              </div> 
+            : <div className='flex w-full items-center gap-2 text-[#95C0A4]'>
+                <span className='block text-[10px]'>Більше</span>
+                <div className='border-b border-[#95C0A4] border-dashed w-full'></div>
+                <div className='flex-none'>
+                  <ArrowDown size={24} />
+                </div>
+              </div> }
           </button>
         </div>
       )}

@@ -24,7 +24,7 @@ export const Seasons: React.FC<Props> = ({ filters, seasons, availableSeasons, l
         className="mt-5"
         limit={6}
         defaultItems={items.slice(0, 6)}
-        items={availableItems ?? []}
+        items={items ?? []}
         loading={loading}
         onClickCheckbox={(value) => {
           filters.setSeasons(value);

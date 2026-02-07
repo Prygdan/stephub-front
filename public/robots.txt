@@ -1,0 +1,18 @@
+User-agent: *
+Disallow: /pay
+Disallow: /thank-you
+Disallow: /favorites
+Disallow: /cart
+Disallow: /*?categories=
+Disallow: /*?subcategories=
+Disallow: /*?brands=
+Disallow: /*?sizes=
+Disallow: /*?seasons=
+Disallow: /*?materials=
+Disallow: /*?priceFrom= 
+Disallow: /*?priceTo=
+
+Disallow: /*?_rsc=
+Allow: / 
+
+Sitemap: https://stephub.store/sitemap.xml

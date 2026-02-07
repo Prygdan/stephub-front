@@ -24,7 +24,7 @@ export const Subcategories: React.FC<Props> = ({ filters, subcategories, availab
         className="mt-5"
         limit={6}
         defaultItems={items.slice(0, 6)}
-        items={availableItems ?? []}
+        items={items ?? []}
         loading={loading}
         onClickCheckbox={(value) => {
           filters.setSubcategories(value);
