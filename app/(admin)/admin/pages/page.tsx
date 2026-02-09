@@ -12,7 +12,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { PenLine, Trash2 } from 'lucide-react';
 import { Description } from '@/components/shared/description';
-import { revalidateRelatedCache } from '@/lib/utils';
 
 export default function Page() {
   const defaultPage: API.TPage = {
@@ -35,10 +34,8 @@ export default function Page() {
     const newItem = { ...item };
     if (item.id) {
       await update(newItem, item.slug);
-      revalidateRelatedCache({pages: true})
     } else {
       create(newItem);
-      revalidateRelatedCache({pages: true})
     }
   }
 

@@ -14,7 +14,6 @@ import { Trash2 } from 'lucide-react';
 import { Img } from '@/components/shared/img';
 import { Label } from '@/components/ui/label';
 import { useCategories } from '@/hooks/filters/use-categories';
-import { revalidateRelatedCache } from '@/lib/utils';
 
 export default function Page() {
   const defaultItem: CarouselsAPI.TCarouselCreate = {
@@ -53,12 +52,10 @@ export default function Page() {
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
     await create(item);
-    revalidateRelatedCache({categories: true})
   };
 
   const handleDeleteCarousel = async (id: string) => { 
     await destroy(id);
-    revalidateRelatedCache({categories: true});
   }
 
   const handleCloseModal = () => {

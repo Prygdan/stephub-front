@@ -16,7 +16,6 @@ import { ProductDetails } from '@/components/shared/product/product-details';
 import { Review } from '@/components/shared/review/review';
 import { PenLine, Trash2 } from 'lucide-react';
 import { usePaginatedCrud } from '@/hooks/use-paginated-crud';
-import { revalidateRelatedCache } from '@/lib/utils';
 
 export default function Page() {
   const { slug } = useParams<{ slug: string }>();
@@ -45,7 +44,6 @@ export default function Page() {
 
   const handleDestroy = async () => {
     product && await destroy(product.slug ?? '');
-    revalidateRelatedCache({categories: true, subcategories: true, products: true})
     router.push('/admin/products');
   }
 

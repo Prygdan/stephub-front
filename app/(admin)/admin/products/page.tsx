@@ -5,7 +5,7 @@ import Link from 'next/link';
 import * as API from '@/services/products';
 import { Title } from "@/components/shared/title";
 import { usePaginatedCrud } from '@/hooks/use-paginated-crud';
-import { isAllowed, isSize, revalidateRelatedCache } from '@/lib/utils';
+import { isAllowed, isSize } from '@/lib/utils';
 import { Loading } from '@/components/shared/loading';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useBrands } from '@/hooks/filters/use-brands';
@@ -81,18 +81,12 @@ export default function Page() {
     e.preventDefault();
     const updatedItem = { ...item, sizes: selectedSizes }
     if (item.slug) {
-      const response = await update(updatedItem, item.slug);
+      await update(updatedItem, item.slug);
       cleanSelected();
-      response && revalidateRelatedCache({
-        categories: true, subcategories: true, products: true, brands: true 
-      })
     } else {
       const response: API.TProduct | undefined = await create(updatedItem);
       cleanSelected();
       response && router.push(`/admin/products/${response.slug}`);
-      response && revalidateRelatedCache({
-        categories: true, subcategories: true, products: true, brands: true
-      })
     }
   };
 
@@ -424,7 +418,6 @@ export default function Page() {
               </Button>
               <Button size='sm' title='Видалити' onClick={() => {
                   destroy(item.slug ?? '');
-                  revalidateRelatedCache({categories: true, subcategories: true, products: true})
                   }}>
                 <Trash2 />
               </Button>

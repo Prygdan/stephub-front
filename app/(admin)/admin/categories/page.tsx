@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { MetaTagsShow } from "@/components/shared/meta-tags/meta-tags-show";
 import { PenLine, Trash2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { ALL_FILTERS, revalidateRelatedCache } from "@/lib/utils";
+import { ALL_FILTERS } from "@/lib/utils";
 
 export default function Page() {
   const defaultCategory: categoriesAPI.TCategory = {
@@ -74,11 +74,9 @@ export default function Page() {
     const newItem = { ...categoryItem };
 
     if (categoryItem.slug) {
-      const response = await updateCategory(newItem, categoryItem.slug);
-      response && revalidateRelatedCache({categories: true, subcategories: true})
+      await updateCategory(newItem, categoryItem.slug);
     } else {
-      const response = await createCategory(newItem);
-      response && revalidateRelatedCache({categories: true, subcategories: true})
+      await createCategory(newItem);
     }
   }
 
@@ -88,12 +86,10 @@ export default function Page() {
     const newItem = { ...subItem };
 
     if (subItem.slug) {
-      const response = await subUpdate(newItem, subItem.slug);
-      response && revalidateRelatedCache({categories: true, subcategories: true})
+      await subUpdate(newItem, subItem.slug);
       categoryFetch();
     } else {
-      const response = await subCreate(newItem);
-      response && revalidateRelatedCache({categories: true, subcategories: true})
+      await subCreate(newItem);
       categoryFetch();
     }
   }

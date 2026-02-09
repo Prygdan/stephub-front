@@ -108,32 +108,6 @@ type TRelativeDBCache = {
   pages?: boolean
 };
 
-const REVALIDATE_ENDPOINTS: Record<keyof TRelativeDBCache, string> = {
-  categories: '/api/revalidate-category',
-  subcategories: '/api/revalidate-subcategory',
-  products: '/api/revalidate-products',
-  brands: '/api/revalidate-brand',
-  pages: '/api/revalidate-page',
-};
-
-export const revalidateRelatedCache = async (
-  flags: TRelativeDBCache
-) => {
-  const requests = Object.entries(flags)
-    .filter(([, enabled]) => enabled)
-    .map(([key]) =>
-      fetch(REVALIDATE_ENDPOINTS[key as keyof TRelativeDBCache], {
-        method: 'POST',
-      })
-    );
-
-  try {
-    await Promise.all(requests);
-  } catch (error) {
-    console.error('Cache revalidation failed:', error);
-  }
-};
-
 export function hasActiveFilters(filters: TSearchParams, page: number = 1): boolean {
   // page > 1 завжди вважаємо "активним" (пагінація впливає на вміст)
   if (page > 1) return true;
