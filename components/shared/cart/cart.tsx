@@ -172,7 +172,7 @@ export const Cart: React.FC<Props> = ({ onCartUpdate, clear, className }) => {
             </div>
             <span className="block text-[14px] mt-[35px] mb-[85px]">У кошику немає товарів</span>
               <Button asChild className="w-full py-4">
-                <Link href="/products">Продовжити покупки</Link>
+                <Link href="/">Продовжити покупки</Link>
               </Button>
           </div>
         )}

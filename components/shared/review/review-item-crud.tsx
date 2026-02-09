@@ -178,15 +178,10 @@ export const ReviewItemCrud: React.FC<Props> = ({
           href={`/admin/products/${review.product?.slug}`}
           className='flex gap-3 items-center hover:opacity-75 transition-all'>
           {review.product?.images && review.product?.images?.length > 0 &&                   
-            <Carousel className='relative'>
-              <CarouselContent className='w-27'>
-                {review.product.images?.map((i) => (<CarouselItem key={i.id}>
-                  <Img src={i.image} alt={review.product?.name ?? ''} width={108}/>
-                </CarouselItem>))}
-              </CarouselContent>
-              <CarouselPrevious className='absolute left-0' />
-              <CarouselNext className='absolute right-0' />
-            </Carousel>}
+            <Link href={`/admin/products/${review.product?.slug}`}>
+              <Img src={review.product?.images[0].image} alt={review.product.name} width={100}/>
+            </Link>
+            }
             <div>
               <h3 className='text-[16px]'>{review.product?.name}</h3>
             </div>

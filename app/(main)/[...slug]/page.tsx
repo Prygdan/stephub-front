@@ -224,15 +224,6 @@ export default async function Page({ params, searchParams }: any) {
             }
           </div>
         </div>
-
-        {subcategory.subcategory.description && 
-          <Description 
-            description={subcategory.subcategory.description} 
-            className='text-neutral-500 pt-10 pb-5'
-            size="13" 
-          />
-        }
-
         {subcategory.products.last_page >= Number(process.env.NEXT_PUBLIC_PAGINATION_COUNT) &&
           <ProductsPagination
             refetchProducts={refetchSubcategoryProducts} 
@@ -240,7 +231,13 @@ export default async function Page({ params, searchParams }: any) {
             className='my-8' 
           />
         }
-        
+        {subcategory.subcategory.description && 
+          <Description 
+            description={subcategory.subcategory.description} 
+            className='text-neutral-500 pt-10 pb-5'
+            size="13" 
+          />
+        }
       </Container>
       : <>{notFound()}</>
       }

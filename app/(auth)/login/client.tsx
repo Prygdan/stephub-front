@@ -127,12 +127,6 @@ export const Client: React.FC<Props> = ({ className }) => {
         >
           На головну
         </Link>
-        <Link
-          href="/forgot-password"
-          className="inline-block text-sm underline-offset-4 hover:underline"
-        >
-          Забули пароль?
-        </Link>
       </CardFooter>
     </Card>
   );

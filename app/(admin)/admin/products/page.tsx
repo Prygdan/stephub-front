@@ -385,18 +385,11 @@ export default function Page() {
               />
             </TableCell>
             <TableCell>
-              {item.images && item.images?.length > 0 &&                   
-              <Carousel className='relative'>
+              {item.images && item.images?.length > 0 &&         
                 <Link href={`/admin/products/${item.slug}`}>
-                  <CarouselContent className='w-37.5'>
-                    {item.images?.slice(0,3).map((i) => (<CarouselItem key={i.id}>
-                      <Img src={i.image} alt={item.name} width={100}/>
-                    </CarouselItem>))}
-                  </CarouselContent>
+                  <Img src={item.images[0].image} alt={item.name} width={100}/>
                 </Link>
-                <CarouselPrevious className='absolute left-0' />
-                <CarouselNext className='absolute right-0' />
-              </Carousel>}
+              }
             </TableCell>
             <TableCell>
               <Link href={`/admin/products/${item.slug}`}>
