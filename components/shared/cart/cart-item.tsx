@@ -49,7 +49,7 @@ export const CartItem: React.FC<Props> = (
       </div>
 
       <div>
-        {product && <Link href={`/product/${product?.subcategory?.slug}/${product?.slug}`}>
+        {product && <Link href={`/product/${product?.slug}`}>
           <span className='block text-[14px] mb-1 font-bold'>{name}</span>
         </Link>}
         <div className='flex gap-1'>

@@ -70,7 +70,7 @@ export default function CheckoutClient() {
 
   return <Container className='mt-10'>
     <div>
-      <span className='uppercase text-[20px] font-medium border-b-4 border-black pb-3'>Оформлення замовлення</span>
+      <span className='uppercase text-[20px] font-medium border-b-4 border-black pb-3 py-4'>Оформлення замовлення</span>
     </div>
 
       {/* SHOW PRODUCTS IN CART FOR CHECKOUT */}

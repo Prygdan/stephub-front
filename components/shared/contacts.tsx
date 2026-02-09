@@ -28,7 +28,8 @@ export const Contacts: React.FC<Props> = ({ className }) => {
           <Send className='text-white cursor-pointer' size={16} />
         </div>
         <Link 
-          href='https://www.instagram.com/stephub_lviv/'
+          href='https://www.instagram.com/stephub_store'
+          target='_blank'
           className='bg-neutral-500 hover:bg-[#96C0A4] rounded-full p-2 cursor-pointer'>
           <Instagram className='text-white cursor-pointer' size={16} />
         </Link>
