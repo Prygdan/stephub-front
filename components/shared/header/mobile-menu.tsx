@@ -148,7 +148,10 @@ export const MobileMenu: React.FC<Props> = ({ categories, className }) => {
           </div>
 
           <div>
-            <SocialMedia width={22} className='gap-5 mt-4' />
+            <SocialMedia 
+              width={22} 
+              instagramHref='https://www.instagram.com/stephub_store'
+              className='gap-5 mt-4' />
           </div>
         </Container>
       </div>
