@@ -5,13 +5,13 @@ const nextConfig: NextConfig = {
     domains: [
       '127.0.0.1',
       'localhost',
-      'zmy.com',
-      'api.zmy.com',
+      'stephub.store',
+      'api.stephub.store',
     ],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'zmy.com',
+        hostname: 'stephub.store',
         port: '443',
         pathname: '/storage/**',
       },
