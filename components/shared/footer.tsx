@@ -5,6 +5,7 @@ import { Container } from './container';
 import { TCategory } from '@/services/categories';
 import { Copyright } from 'lucide-react';
 import { Contacts } from './contacts';
+import Image from 'next/image';
 
 interface Props {
   categories: TCategory[]
@@ -77,7 +78,7 @@ export const Footer: React.FC<Props> = ({ categories, className }) => {
           </Link>
         </div>
 
-        {/* Contacts — ЗАВЖДИ ВНИЗУ НА МОБІЛЦІ */}
+        {/* Contacts - ЗАВЖДИ ВНИЗУ НА МОБІЛЦІ */}
         <div className="order-4 md:order-2">
           <span className="block text-[16px] font-bold mb-2">
             Контакти
@@ -88,9 +89,29 @@ export const Footer: React.FC<Props> = ({ categories, className }) => {
 
       </Container>
 
-      <Container className="flex justify-center items-center text-neutral-600 gap-1 border-t border-t-neutral-100 py-5">
-        <Copyright size={12} />
-        <span className="text-[14px]">2026 STEPHUB v.1.0</span>
+
+      <Container className="border-t border-t-neutral-100 py-5">
+        <div className='flex justify-center items-center mb-4'>
+          <Link
+            href="https://ryla.digital"
+            target="_blank"
+            rel="noopener noreferrer"
+            className='flex items-center gap-1.5 text-[14px]'
+          >
+            Розроблено
+            <Image
+              src="/ryladigital-logo-black.png"
+              alt="Ryla Digital"
+              width={102}
+              height={32}
+              className="object-contain"
+            />
+          </Link>
+        </div>
+        <div className='flex justify-center items-center text-neutral-600 gap-1 '>
+          <Copyright size={12} />
+          <span className="text-[14px]">2026 STEPHUB v.1.0</span>
+        </div>
       </Container>
     </div>
   );
